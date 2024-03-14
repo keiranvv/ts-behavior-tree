@@ -1,4 +1,4 @@
-import { Node } from '@/base/node'
+import { Node } from './node'
 
 export abstract class ActionNode<
 	TInputPorts = Record<string, unknown>,

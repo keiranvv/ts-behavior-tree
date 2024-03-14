@@ -1,5 +1,5 @@
-import { ControlNode } from '@/base/controlNode'
-import { NodeStatus } from '@/base/nodeStatus'
+import { ControlNode } from '../base/controlNode'
+import { NodeStatus } from '../base/nodeStatus'
 
 export class SequenceWithMemoryNode<
 	TInputPorts = Record<string, unknown>,
@@ -7,7 +7,7 @@ export class SequenceWithMemoryNode<
 > extends ControlNode<TInputPorts, TOutputPorts> {
 	index = 0
 
-	async tick() {
+	tick() {
 		let skipped = false
 
 		if (this.status === NodeStatus.IDLE) {
@@ -19,7 +19,7 @@ export class SequenceWithMemoryNode<
 		for (let i = this.index; i < this.children.length; i++) {
 			this.index = i
 
-			const status = await this.children[i].executeTick()
+			const status = this.children[i].executeTick()
 
 			skipped = skipped || status === NodeStatus.SKIPPED
 

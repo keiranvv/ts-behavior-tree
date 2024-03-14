@@ -7,7 +7,7 @@ class SampleNode extends ActionNode {
 		super()
 	}
 
-	async tick() {
+	tick() {
 		sampleNodeCounter++
 		return NodeStatus.SUCCESS
 	}
@@ -22,7 +22,7 @@ describe('repeatNode', () => {
 		const repeatNode = new RepeatNode(new SampleNode())
 		repeatNode.setBlackboard(new Blackboard())
 
-		expect(repeatNode.executeTick()).rejects.toThrow('num_cycles is required in RepeatNode')
+		expect(repeatNode.executeTick()).toThrow('num_cycles is required in RepeatNode')
 		expect(sampleNodeCounter).toBe(0)
 	})
 
@@ -32,7 +32,7 @@ describe('repeatNode', () => {
 
 		repeatNode.write_output('num_cycles', 5)
 
-		await repeatNode.executeTick()
+		repeatNode.executeTick()
 
 		expect(sampleNodeCounter).toBe(5)
 	})

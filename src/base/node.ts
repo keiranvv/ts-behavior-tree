@@ -1,4 +1,4 @@
-import { EventEmitter } from '@/util/events/eventEmitter'
+import { EventEmitter } from '../util/events/eventEmitter'
 import { Blackboard } from './blackboard'
 import { NodeStatus } from './nodeStatus'
 
@@ -33,7 +33,7 @@ export abstract class Node<
 		return this._status
 	}
 
-	protected abstract tick(): Promise<NodeStatus>
+	protected abstract tick(): NodeStatus
 
 	public setBlackboard(blackboard: Blackboard) {
 		this._blackboard = blackboard
@@ -45,7 +45,7 @@ export abstract class Node<
 		this.emit('statusChanged', this)
 	}
 
-	public async executeTick() {
+	public executeTick() {
 		let prev_status = this._status
 
 		if (prev_status === NodeStatus.IDLE) {
@@ -53,7 +53,7 @@ export abstract class Node<
 			prev_status = NodeStatus.RUNNING
 		}
 
-		const status = await this.tick()
+		const status = this.tick()
 		if (status !== prev_status) {
 			this.setStatus(status)
 		}

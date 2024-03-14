@@ -1,14 +1,14 @@
-import { DecoratorNode } from '@/base/decoratorNode'
-import { NodeStatus } from '@/base/nodeStatus'
+import { DecoratorNode } from '../../base/decoratorNode'
+import { NodeStatus } from '../../base/nodeStatus'
 
 export class InverterNode<
 	TInputPorts = Record<string, unknown>,
 	TOutputPorts = Record<string, unknown>
 > extends DecoratorNode<TInputPorts, TOutputPorts> {
-	async tick() {
+	tick() {
 		this.setStatus(NodeStatus.RUNNING)
 
-		const result = await this.child.executeTick()
+		const result = this.child.executeTick()
 
 		switch (result) {
 			case NodeStatus.SUCCESS:

@@ -1,4 +1,4 @@
-import { Node } from '@/base/node'
+import { Node } from './node'
 import { NodeStatus } from './nodeStatus'
 import { Blackboard } from './blackboard'
 

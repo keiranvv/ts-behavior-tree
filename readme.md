@@ -27,3 +27,5 @@ tree.tickWhileRunning()
 ## TODO
 - How to set ports when not using a parser (which doesn't exist yet)
 - Create an xml/json parser
+- Figure out interrupt signals, if needed
+- Correctly implement halting

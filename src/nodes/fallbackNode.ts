@@ -1,5 +1,5 @@
-import { ControlNode } from '@/base/controlNode'
-import { NodeStatus } from '@/base/nodeStatus'
+import { ControlNode } from '../base/controlNode'
+import { NodeStatus } from '../base/nodeStatus'
 
 export class FallbackNode<
 	TInputPorts = Record<string, unknown>,
@@ -7,7 +7,7 @@ export class FallbackNode<
 > extends ControlNode<TInputPorts, TOutputPorts> {
 	index: number = 0
 
-	async tick() {
+	tick() {
 		let skipped = false
 
 		if (this.status === NodeStatus.IDLE) {
@@ -17,7 +17,7 @@ export class FallbackNode<
 		this.setStatus(NodeStatus.RUNNING)
 
 		for (let i = this.index; i < this.children.length; i++) {
-			const status = await this.children[i].executeTick()
+			const status = this.children[i].executeTick()
 
 			skipped = skipped || status === NodeStatus.SKIPPED
 

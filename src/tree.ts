@@ -40,7 +40,9 @@ export class Tree extends EventEmitter {
 			status === NodeStatus.IDLE ||
 			(option === TickOption.WHILE_RUNNING && status === NodeStatus.RUNNING)
 		) {
-			status = await this.rootNode.executeTick()
+			this.emit('tick')
+
+			status = this.rootNode.executeTick()
 
 			if (status === NodeStatus.FAILURE || status === NodeStatus.SUCCESS) {
 				this.rootNode.resetStatus()

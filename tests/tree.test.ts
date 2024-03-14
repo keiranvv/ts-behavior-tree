@@ -7,7 +7,7 @@ describe('tree tests', () => {
 		class SimpleNode extends ActionNode {
 			count = 0
 
-			async tick() {
+			tick() {
 				this.count++
 
 				if (this.count === 5) {
@@ -29,7 +29,7 @@ describe('tree tests', () => {
 		class SimpleNode extends ActionNode {
 			count = 0
 
-			async tick() {
+			tick() {
 				this.count++
 
 				if (this.count === 5) {

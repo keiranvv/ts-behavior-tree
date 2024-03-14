@@ -1,5 +1,5 @@
-import { DecoratorNode } from '@/base/decoratorNode'
-import { NodeStatus } from '@/base/nodeStatus'
+import { DecoratorNode } from '../../base/decoratorNode'
+import { NodeStatus } from '../../base/nodeStatus'
 
 export class RetryUntilSuccessfulNode<
 	TInputPorts extends {
@@ -9,7 +9,7 @@ export class RetryUntilSuccessfulNode<
 > extends DecoratorNode<TInputPorts, TOutputPorts> {
 	private index = 0
 
-	async tick() {
+	tick() {
 		const num_cycles = this.read_input('num_attempts')
 		let skipped = false
 
@@ -24,7 +24,7 @@ export class RetryUntilSuccessfulNode<
 		this.setStatus(NodeStatus.RUNNING)
 
 		for (let i = this.index; i < num_cycles; i++) {
-			const status = await this.child.executeTick()
+			const status = this.child.executeTick()
 
 			skipped = skipped || status === NodeStatus.SKIPPED
 
