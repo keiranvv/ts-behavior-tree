@@ -2,6 +2,17 @@ import { EventEmitter } from '@/util/events/eventEmitter'
 import { Blackboard } from './blackboard'
 import { NodeStatus } from './nodeStatus'
 
+/**
+ * @abstract @class Node
+ *
+ * @classdesc Root class for all Node types.
+ * Responsible for managing node status, blackboard, events, and port handling.
+ * Subclasses must implement the `tick` method.
+ *
+ * @template TInputPorts - The input ports of the node.
+ * @template TOutputPorts - The output ports of the node.
+ *
+ */
 export abstract class Node<
 	TInputPorts = Record<string, unknown>,
 	TOutputPorts = Record<string, unknown>
@@ -10,14 +21,31 @@ export abstract class Node<
 	private _uuid = Math.random().toString(36).substring(7)
 	private _status = NodeStatus.IDLE
 
+	public get blackboard() {
+		return this._blackboard
+	}
+
 	public get uuid() {
 		return this._uuid
 	}
 
+	public get status() {
+		return this._status
+	}
+
 	protected abstract tick(): Promise<NodeStatus>
 
+	public setBlackboard(blackboard: Blackboard) {
+		this._blackboard = blackboard
+	}
+
+	protected setStatus(status: NodeStatus) {
+		this._status = status
+
+		this.emit('statusChanged', this)
+	}
+
 	public async executeTick() {
-		// TODO: Add some observability etc here
 		let prev_status = this._status
 
 		if (prev_status === NodeStatus.IDLE) {
@@ -33,46 +61,12 @@ export abstract class Node<
 		return status
 	}
 
-	public setBlackboard(blackboard: Blackboard) {
-		this._blackboard = blackboard
-	}
-
-	public get blackboard() {
-		return this._blackboard
-	}
-
-	protected setStatus(status: NodeStatus) {
-		this._status = status
-
-		this.emit('statusChanged', this)
-	}
-
-	public get status() {
-		return this._status
-	}
-
 	public resetStatus() {
 		this._status = NodeStatus.IDLE
 	}
 
 	public halt() {
 		this.resetStatus()
-	}
-
-	protected write_output<K extends keyof TOutputPorts>(key: K, value: TOutputPorts[K]) {
-		if (!this._blackboard) {
-			throw new Error('Blackboard not set')
-		}
-
-		this._blackboard.set(key as string, value)
-	}
-
-	protected read_input<K extends keyof TInputPorts>(key: K): TInputPorts[K] {
-		if (!this._blackboard) {
-			throw new Error('Blackboard not set')
-		}
-
-		return this._blackboard.get(key as string)
 	}
 
 	public getAllChildNodes() {
@@ -93,5 +87,25 @@ export abstract class Node<
 		}
 
 		return nodes
+	}
+
+	/*
+	 * Blackboard functions
+	 */
+
+	public write_output<K extends keyof TOutputPorts>(key: K, value: TOutputPorts[K]) {
+		if (!this._blackboard) {
+			throw new Error('Blackboard not set')
+		}
+
+		this._blackboard.set(key as string, value)
+	}
+
+	public read_input<K extends keyof TInputPorts>(key: K): TInputPorts[K] {
+		if (!this._blackboard) {
+			throw new Error('Blackboard not set')
+		}
+
+		return this._blackboard.get(key as string)
 	}
 }

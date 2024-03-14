@@ -3,12 +3,18 @@
 	"version": "1.0.0",
 	"description": "",
 	"main": "dist/index.js",
+	"homepage": "https://github.com/keiranvv/ts-behavior-tree",
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:keiranvv/ts-behavior-tree.git"
+	},
 	"scripts": {
 		"build": "tsc",
 		"start": "node -r tsconfig-paths/register dist/index.js",
 		"ui": "ts-node -r tsconfig-paths/register src/ui/index.ts",
 		"dev": "nodemon",
-		"test": "jest"
+		"test": "jest",
+		"docs": "typedoc --out docs src/index.ts"
 	},
 	"author": "",
 	"license": "ISC",
@@ -21,10 +27,8 @@
 		"ts-node": "^10.9.2",
 		"tsconfig-paths": "^4.2.0",
 		"tslib": "^2.6.2",
+		"typedoc": "^0.25.12",
 		"typescript": "^5.3.3",
 		"typescript-eslint": "^7.0.2"
-	},
-	"dependencies": {
-		"console-gui-tools": "^3.5.0"
 	}
 }

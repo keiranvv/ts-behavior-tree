@@ -1,3 +1,4 @@
+import { Blackboard } from './base/blackboard'
 import { Node } from './base/node'
 import { NodeStatus } from './base/nodeStatus'
 import { EventEmitter } from './util/events/eventEmitter'
@@ -16,6 +17,8 @@ export class Tree extends EventEmitter {
 	constructor(rootNode: Node) {
 		super()
 		this.rootNode = rootNode
+
+		this.rootNode.setBlackboard(new Blackboard())
 
 		this.nodesList().forEach((node) => {
 			node.on('statusChanged', this.nodeStatusChangedHandler)

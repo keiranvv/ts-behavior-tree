@@ -1,3 +1,7 @@
+import { ActionNode } from './base/actionNode'
+import { DecoratorNode } from './base/decoratorNode'
+import { Node } from './base/node'
+
 import { ForceFailureNode } from './nodes/decorators/forceFailureNode'
 import { ForceSuccessNode } from './nodes/decorators/forceSuccessNode'
 import { InverterNode } from './nodes/decorators/inverterNode'
@@ -9,9 +13,15 @@ import { ReactiveFallbackNode } from './nodes/reactiveFallbackNode'
 import { SequenceNode } from './nodes/sequenceNode'
 import { SequenceWithMemoryNode } from './nodes/sequenceWithMemoryNode'
 
+import { NodeStatus } from './base/nodeStatus'
+
 import { Tree } from './tree'
 
 export {
+	ActionNode,
+	DecoratorNode,
+	Node,
+	NodeStatus,
 	ForceFailureNode,
 	ForceSuccessNode,
 	InverterNode,
