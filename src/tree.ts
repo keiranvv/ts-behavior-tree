@@ -10,15 +10,19 @@ export enum TickOption {
 
 export class Tree extends EventEmitter {
 	private sleep_time = 1000
-	private rootNode: Node | null = null
+	private _rootNode: Node | null = null
+
+	get rootNode() {
+		return this._rootNode
+	}
 
 	private nodeStatusChangedHandler = this.onNodeStatusChanged.bind(this)
 
 	constructor(rootNode: Node) {
 		super()
-		this.rootNode = rootNode
+		this._rootNode = rootNode
 
-		this.rootNode.setBlackboard(new Blackboard())
+		this._rootNode.setBlackboard(new Blackboard())
 
 		this.nodesList().forEach((node) => {
 			node.on('statusChanged', this.nodeStatusChangedHandler)
@@ -32,7 +36,7 @@ export class Tree extends EventEmitter {
 	async tickRoot(option: TickOption, sleep_time: number) {
 		let status = NodeStatus.IDLE
 
-		if (!this.rootNode) {
+		if (!this._rootNode) {
 			throw new Error('Root node is not set')
 		}
 
@@ -42,10 +46,10 @@ export class Tree extends EventEmitter {
 		) {
 			this.emit('tick')
 
-			status = this.rootNode.executeTick()
+			status = this._rootNode.executeTick()
 
 			if (status === NodeStatus.FAILURE || status === NodeStatus.SUCCESS) {
-				this.rootNode.resetStatus()
+				this._rootNode.resetStatus()
 			}
 
 			if (status === NodeStatus.RUNNING) {
@@ -57,11 +61,11 @@ export class Tree extends EventEmitter {
 	}
 
 	nodesList() {
-		if (!this.rootNode) {
+		if (!this._rootNode) {
 			return []
 		}
 
-		return [this.rootNode, ...this.rootNode.getAllChildNodes()]
+		return [this._rootNode, ...this._rootNode.getAllChildNodes()]
 	}
 
 	private onNodeStatusChanged(node: Node) {

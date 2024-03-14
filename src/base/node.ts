@@ -69,7 +69,11 @@ export abstract class Node<
 		this.resetStatus()
 	}
 
-	public getAllChildNodes() {
+	/**
+	 *
+	 * @returns {Node[]} - A list of all child nodes starting from the current node and going all the way down to the leaves.
+	 */
+	public getAllChildNodes(): Node[] {
 		const nodes = []
 
 		const thisNode = this as any
