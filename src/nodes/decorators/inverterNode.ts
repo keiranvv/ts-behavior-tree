@@ -12,11 +12,9 @@ export class InverterNode<
 
 		switch (result) {
 			case NodeStatus.SUCCESS:
-				this.resetChild()
 				return NodeStatus.FAILURE
 
 			case NodeStatus.FAILURE:
-				this.resetChild()
 				return NodeStatus.SUCCESS
 
 			case NodeStatus.RUNNING:

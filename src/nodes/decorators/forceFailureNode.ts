@@ -12,10 +12,9 @@ export class ForceFailureNode<
 
 		switch (result) {
 			case NodeStatus.SUCCESS:
-			case NodeStatus.FAILURE:
-				this.resetChild()
 				return NodeStatus.FAILURE
 
+			case NodeStatus.FAILURE:
 			case NodeStatus.RUNNING:
 			case NodeStatus.SKIPPED:
 				return result

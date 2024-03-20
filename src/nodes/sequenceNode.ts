@@ -12,7 +12,7 @@ export class SequenceNode<
 			skipped = true
 		}
 
-		this.setStatus(NodeStatus.RUNNING)
+		// this.setStatus(NodeStatus.RUNNING)
 
 		for (let i = 0; i < this.children.length; i++) {
 			const status = this.children[i].executeTick()

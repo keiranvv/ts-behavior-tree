@@ -11,11 +11,10 @@ export class ForceSuccessNode<
 		const result = this.child.executeTick()
 
 		switch (result) {
-			case NodeStatus.SUCCESS:
 			case NodeStatus.FAILURE:
-				this.resetChild()
 				return NodeStatus.SUCCESS
 
+			case NodeStatus.SUCCESS:
 			case NodeStatus.RUNNING:
 			case NodeStatus.SKIPPED:
 				return result

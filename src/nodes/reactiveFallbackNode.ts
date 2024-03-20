@@ -24,7 +24,6 @@ export class ReactiveFallbackNode<
 			}
 
 			if (status === NodeStatus.SUCCESS) {
-				this.resetChildren()
 				return NodeStatus.SUCCESS
 			}
 
@@ -37,7 +36,6 @@ export class ReactiveFallbackNode<
 			return NodeStatus.SKIPPED
 		}
 
-		this.resetChildren()
 		return NodeStatus.FAILURE
 	}
 }

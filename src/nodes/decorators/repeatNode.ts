@@ -32,13 +32,10 @@ export class RepeatNode<
 
 			if (status === NodeStatus.SUCCESS) {
 				this.index = i
-
-				this.resetChild()
 			}
 
 			if (status === NodeStatus.FAILURE) {
 				this.index = 0
-				this.resetChild()
 				return NodeStatus.FAILURE
 			}
 

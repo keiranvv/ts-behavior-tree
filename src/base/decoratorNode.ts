@@ -25,6 +25,11 @@ export abstract class DecoratorNode<
 		this.resetStatus()
 	}
 
+	override resetStatus(): void {
+		super.resetStatus()
+		this.resetChild()
+	}
+
 	resetChild() {
 		if (!this.child) {
 			return

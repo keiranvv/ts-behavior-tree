@@ -21,7 +21,7 @@ export class RetryUntilSuccessfulNode<
 			skipped = true
 		}
 
-		this.setStatus(NodeStatus.RUNNING)
+		// this.setStatus(NodeStatus.RUNNING)
 
 		for (let i = this.index; i < num_cycles; i++) {
 			const status = this.child.executeTick()

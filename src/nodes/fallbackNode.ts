@@ -27,7 +27,6 @@ export class FallbackNode<
 			}
 
 			if (status === NodeStatus.SUCCESS) {
-				this.resetChildren()
 				this.index = 0
 				return NodeStatus.SUCCESS
 			}
@@ -41,7 +40,6 @@ export class FallbackNode<
 			return NodeStatus.SKIPPED
 		}
 
-		this.resetChildren()
 		this.index = 0
 
 		return NodeStatus.FAILURE

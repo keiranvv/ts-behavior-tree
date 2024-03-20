@@ -28,6 +28,11 @@ export abstract class ControlNode<
 		this.resetStatus()
 	}
 
+	override resetStatus(): void {
+		super.resetStatus()
+		this.resetChildren()
+	}
+
 	resetChildren() {
 		this.children.forEach((child) => {
 			if (child.status === NodeStatus.RUNNING) {

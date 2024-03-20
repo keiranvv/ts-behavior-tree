@@ -2,6 +2,13 @@ import { EventEmitter } from '../util/events/eventEmitter'
 import { Blackboard } from './blackboard'
 import { NodeStatus } from './nodeStatus'
 
+export type NodeJSON = {
+	uuid: string
+	displayName: string
+	status: NodeStatus
+	children: NodeJSON[]
+}
+
 /**
  * @abstract @class Node
  *
@@ -20,6 +27,7 @@ export abstract class Node<
 	private _blackboard: Blackboard | undefined
 	private _uuid = Math.random().toString(36).substring(7)
 	private _status = NodeStatus.IDLE
+	private _prevStatus = NodeStatus.IDLE
 
 	public get blackboard() {
 		return this._blackboard
@@ -33,6 +41,14 @@ export abstract class Node<
 		return this._status
 	}
 
+	public get prevStatus() {
+		return this._prevStatus
+	}
+
+	public get displayName() {
+		return this.constructor.name
+	}
+
 	protected abstract tick(): NodeStatus
 
 	public setBlackboard(blackboard: Blackboard) {
@@ -40,6 +56,11 @@ export abstract class Node<
 	}
 
 	protected setStatus(status: NodeStatus) {
+		if (this._status === status) {
+			return
+		}
+
+		this._prevStatus = this._status
 		this._status = status
 
 		this.emit('statusChanged', this)
@@ -74,23 +95,45 @@ export abstract class Node<
 	 * @returns {Node[]} - A list of all child nodes starting from the current node and going all the way down to the leaves.
 	 */
 	public getAllChildNodes(): Node[] {
+		return this.getChildNodes(Infinity)
+	}
+
+	/**
+	 *
+	 * @param {number} depth - The depth of the tree to search for child nodes.
+	 * @returns {Node[]} - A list of all child nodes starting from the current node and going down to the specified depth. A depth of -1 will return all child nodes.
+	 */
+	public getChildNodes(depth: number) {
 		const nodes = []
 
 		const thisNode = this as any
+
+		if (depth === 0) {
+			return []
+		}
 
 		if (thisNode.children) {
 			nodes.push(...thisNode.children)
 
 			thisNode.children.forEach((child: any) => {
-				nodes.push(...child.getAllChildNodes())
+				nodes.push(...child.getChildNodes(depth - 1))
 			})
 		} else if (thisNode.child) {
 			nodes.push(thisNode.child)
 
-			nodes.push(...thisNode.child.getAllChildNodes())
+			nodes.push(...thisNode.child.getChildNodes(depth - 1))
 		}
 
 		return nodes
+	}
+
+	public toJSON(): NodeJSON {
+		return {
+			uuid: this.uuid,
+			displayName: this.displayName,
+			status: this.status,
+			children: this.getChildNodes(1).map((node) => node.toJSON()),
+		}
 	}
 
 	/*

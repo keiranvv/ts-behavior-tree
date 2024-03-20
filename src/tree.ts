@@ -8,6 +8,10 @@ export enum TickOption {
 	EXACTLY_ONCE,
 }
 
+export type TreeJSON = {
+	rootNode: any
+}
+
 export class Tree extends EventEmitter {
 	private sleep_time = 1000
 	private _rootNode: Node | null = null
@@ -53,6 +57,7 @@ export class Tree extends EventEmitter {
 			}
 
 			if (status === NodeStatus.RUNNING) {
+				// Sleep
 				await new Promise((resolve) => setTimeout(resolve, sleep_time))
 			}
 		}
@@ -66,6 +71,12 @@ export class Tree extends EventEmitter {
 		}
 
 		return [this._rootNode, ...this._rootNode.getAllChildNodes()]
+	}
+
+	toJSON(): TreeJSON {
+		return {
+			rootNode: this._rootNode?.toJSON(),
+		}
 	}
 
 	private onNodeStatusChanged(node: Node) {
