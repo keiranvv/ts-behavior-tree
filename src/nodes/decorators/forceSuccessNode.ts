@@ -6,8 +6,6 @@ export class ForceSuccessNode<
 	TOutputPorts = Record<string, unknown>
 > extends DecoratorNode<TInputPorts, TOutputPorts> {
 	tick() {
-		this.setStatus(NodeStatus.RUNNING)
-
 		const result = this.child.executeTick()
 
 		switch (result) {

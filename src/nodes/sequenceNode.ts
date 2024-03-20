@@ -12,8 +12,6 @@ export class SequenceNode<
 			skipped = true
 		}
 
-		// this.setStatus(NodeStatus.RUNNING)
-
 		for (let i = 0; i < this.children.length; i++) {
 			const status = this.children[i].executeTick()
 
@@ -22,6 +20,7 @@ export class SequenceNode<
 			if (status === NodeStatus.FAILURE) {
 				return NodeStatus.FAILURE
 			}
+
 			if (status === NodeStatus.RUNNING) {
 				return NodeStatus.RUNNING
 			}

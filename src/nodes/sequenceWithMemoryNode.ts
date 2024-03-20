@@ -14,8 +14,6 @@ export class SequenceWithMemoryNode<
 			skipped = true
 		}
 
-		this.setStatus(NodeStatus.RUNNING)
-
 		for (let i = this.index; i < this.children.length; i++) {
 			this.index = i
 

@@ -14,8 +14,6 @@ export class FallbackNode<
 			skipped = true
 		}
 
-		this.setStatus(NodeStatus.RUNNING)
-
 		for (let i = this.index; i < this.children.length; i++) {
 			const status = this.children[i].executeTick()
 

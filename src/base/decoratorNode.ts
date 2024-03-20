@@ -15,6 +15,7 @@ export abstract class DecoratorNode<
 
 	override setBlackboard(blackboard: Blackboard) {
 		super.setBlackboard(blackboard)
+
 		if (this.blackboard) {
 			this.child.setBlackboard(this.blackboard)
 		}
@@ -26,8 +27,8 @@ export abstract class DecoratorNode<
 	}
 
 	override resetStatus(): void {
-		super.resetStatus()
 		this.resetChild()
+		super.resetStatus()
 	}
 
 	resetChild() {

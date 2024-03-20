@@ -55,7 +55,7 @@ export abstract class Node<
 		this._blackboard = blackboard
 	}
 
-	protected setStatus(status: NodeStatus) {
+	private setStatus(status: NodeStatus) {
 		if (this._status === status) {
 			return
 		}
@@ -83,7 +83,7 @@ export abstract class Node<
 	}
 
 	public resetStatus() {
-		this._status = NodeStatus.IDLE
+		this.setStatus(NodeStatus.IDLE)
 	}
 
 	public halt() {
