@@ -1,4 +1,5 @@
 import { ActionNode } from './base/actionNode'
+import { ControlNode } from './base/controlNode'
 import { DecoratorNode } from './base/decoratorNode'
 import { Node } from './base/node'
 
@@ -19,6 +20,7 @@ import { Tree } from './tree'
 
 export {
 	ActionNode,
+	ControlNode,
 	DecoratorNode,
 	Node,
 	NodeStatus,
