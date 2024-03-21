@@ -31,12 +31,21 @@ export class RepeatNode<
 			}
 
 			if (status === NodeStatus.SUCCESS) {
-				this.index = i
+				this.index++
+				this.resetChild()
+
+				if (this.index < num_cycles) {
+					continue
+				}
 			}
 
 			if (status === NodeStatus.FAILURE) {
 				this.index = 0
 				return NodeStatus.FAILURE
+			}
+
+			if (status === NodeStatus.SKIPPED) {
+				return NodeStatus.SKIPPED
 			}
 
 			if (status === NodeStatus.IDLE) {
@@ -45,6 +54,7 @@ export class RepeatNode<
 		}
 
 		this.index = 0
+
 		if (skipped) {
 			return NodeStatus.SKIPPED
 		}

@@ -74,6 +74,8 @@ export abstract class Node<
 			prev_status = NodeStatus.RUNNING
 		}
 
+		this.emit('tick_executed', this)
+
 		const status = this.tick()
 		if (status !== prev_status) {
 			this.setStatus(status)

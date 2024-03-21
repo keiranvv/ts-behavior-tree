@@ -22,7 +22,9 @@ describe('repeatNode', () => {
 		const repeatNode = new RepeatNode(new SampleNode())
 		repeatNode.setBlackboard(new Blackboard())
 
-		expect(repeatNode.executeTick()).toThrow('num_cycles is required in RepeatNode')
+		expect(() => {
+			repeatNode.executeTick()
+		}).toThrow('num_cycles is required in RepeatNode')
 		expect(sampleNodeCounter).toBe(0)
 	})
 

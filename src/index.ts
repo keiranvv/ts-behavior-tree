@@ -3,6 +3,7 @@ import { ControlNode } from './base/controlNode'
 import { DecoratorNode } from './base/decoratorNode'
 import { Node } from './base/node'
 
+import { DelayNode } from './nodes/decorators/delayNode'
 import { ForceFailureNode } from './nodes/decorators/forceFailureNode'
 import { ForceSuccessNode } from './nodes/decorators/forceSuccessNode'
 import { InverterNode } from './nodes/decorators/inverterNode'
@@ -22,6 +23,7 @@ export {
 	ActionNode,
 	ControlNode,
 	DecoratorNode,
+	DelayNode,
 	Node,
 	NodeStatus,
 	ForceFailureNode,

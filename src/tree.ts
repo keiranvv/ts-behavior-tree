@@ -13,7 +13,7 @@ export type TreeJSON = {
 }
 
 export class Tree extends EventEmitter {
-	private sleep_time = 1000
+	private sleep_time = 100
 	private _rootNode: Node | null = null
 
 	private _isHalted = false
