@@ -1,11 +1,11 @@
-import { Blackboard } from '@/base/blackboard'
-import { Node } from '@/base/node'
-import { NodeStatus } from '@/base/nodeStatus'
+import { Blackboard } from '../src/base/blackboard'
+import { Node } from '../src/base/node'
+import { NodeStatus } from '../src/base/nodeStatus'
 
 describe('base node', () => {
-	test('write_output updates blackboard and read_input gets blackboard value', async () => {
+	test('write_output updates blackboard and read_input gets blackboard value', () => {
 		class TestNode extends Node {
-			async tick() {
+			tick() {
 				this.write_output('a', 1)
 				return NodeStatus.SUCCESS
 			}
@@ -18,21 +18,21 @@ describe('base node', () => {
 		const t = new TestNode()
 		t.setBlackboard(new Blackboard())
 
-		await t.executeTick()
+		t.executeTick()
 
 		expect(t.getValue('a')).toBe(1)
 	})
 
-	test('write_output value is accessible in other node', async () => {
+	test('write_output value is accessible in other node', () => {
 		class TestNode extends Node {
-			async tick() {
+			tick() {
 				this.write_output('a', 1)
 				return NodeStatus.SUCCESS
 			}
 		}
 
 		class Test2Node extends Node {
-			async tick() {
+			tick() {
 				return NodeStatus.SUCCESS
 			}
 
@@ -49,7 +49,7 @@ describe('base node', () => {
 		t.setBlackboard(b)
 		t2.setBlackboard(b)
 
-		await t.executeTick()
+		t.executeTick()
 
 		expect(t2.getValue('a')).toBe(1)
 	})

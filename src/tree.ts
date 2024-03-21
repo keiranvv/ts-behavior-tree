@@ -16,6 +16,8 @@ export class Tree extends EventEmitter {
 	private sleep_time = 1000
 	private _rootNode: Node | null = null
 
+	private _isHalted = false
+
 	get rootNode() {
 		return this._rootNode
 	}
@@ -38,16 +40,23 @@ export class Tree extends EventEmitter {
 	}
 
 	async tickRoot(option: TickOption, sleep_time: number) {
-		let status = NodeStatus.IDLE
-
 		if (!this._rootNode) {
 			throw new Error('Root node is not set')
 		}
+
+		this._isHalted = false
+		let status = NodeStatus.IDLE
+
+		this.emit('start')
 
 		while (
 			status === NodeStatus.IDLE ||
 			(option === TickOption.WHILE_RUNNING && status === NodeStatus.RUNNING)
 		) {
+			if (this._isHalted) {
+				return NodeStatus.IDLE
+			}
+
 			this.emit('tick')
 
 			status = this._rootNode.executeTick()
@@ -57,12 +66,19 @@ export class Tree extends EventEmitter {
 			}
 
 			if (status === NodeStatus.RUNNING) {
-				// Sleep
 				await new Promise((resolve) => setTimeout(resolve, sleep_time))
 			}
 		}
 
+		this.emit('end')
+
 		return status
+	}
+
+	halt() {
+		this._isHalted = true
+		this.rootNode?.halt()
+		this.emit('end')
 	}
 
 	nodesList() {

@@ -1,6 +1,6 @@
-import { ActionNode } from '@/base/actionNode'
-import { NodeStatus } from '@/base/nodeStatus'
-import { TickOption, Tree } from '@/tree'
+import { ActionNode } from '../src/base/actionNode'
+import { NodeStatus } from '../src/base/nodeStatus'
+import { TickOption, Tree } from '../src/tree'
 
 describe('tree tests', () => {
 	test('tick exactly once', async () => {

@@ -1,5 +1,5 @@
-import { Blackboard } from '@/base/blackboard'
-import { ActionNode, NodeStatus, RepeatNode, Tree } from '@/index'
+import { Blackboard } from '../src/base/blackboard'
+import { ActionNode, NodeStatus, RepeatNode, Tree } from '../src/index'
 
 let sampleNodeCounter = 0
 class SampleNode extends ActionNode {
